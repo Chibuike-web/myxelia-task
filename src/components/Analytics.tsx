@@ -1,9 +1,10 @@
 import { CaretRightIcon } from "@phosphor-icons/react";
 import { useState } from "react";
-import firstMetricItem from "../assets/first-metric-item.webp";
 import { ListingHouseIcon, ProfileIcon } from "../assets/Icons";
+import firstMetricItem from "../assets/first-metric-item.webp";
 import secondMetricItem from "../assets/second-metric-item.webp";
 import thirdMetricItem from "../assets/third-metric-item.webp";
+
 import { useActiveIndex } from "../lib/Hooks";
 import { cn } from "../lib/utils";
 
@@ -11,7 +12,7 @@ export default function Analytics() {
 	return (
 		<div className="max-w-[1280px] mx-auto flex flex-col w-full px-6 xl:px-0">
 			<h1 className="font-semibold mb-4 mt-7 text-xl">Welcome, Ahmed</h1>
-			<div className="flex w-full gap-5">
+			<div className="flex flex-col xl:flex-row w-full gap-5">
 				<SalesOverview />
 				<SubOverviews />
 			</div>
@@ -24,7 +25,7 @@ export default function Analytics() {
 const SalesOverview = () => {
 	const { activeIndex, handleActiveIndex } = useActiveIndex(2);
 	return (
-		<div className="flex flex-col border border-light-gray rounded-[16px] w-[857px] flex-shrink-0">
+		<div className="flex flex-col border border-light-gray rounded-[16px] w-full xl:max-w-[857px] xl:flex-shrink-0">
 			<div className="flex justify-between items-center w-full">
 				<div>
 					<h1>Sales Overview</h1>
@@ -54,7 +55,7 @@ const SalesOverview = () => {
 
 const SubOverviews = () => {
 	return (
-		<div className="grid gap-4 w-full ">
+		<div className="flex flex-col md:flex-row xl:flex-col gap-4 w-full ">
 			{subOverviews.map((item) => (
 				<Card key={item.id} {...item} />
 			))}
@@ -64,7 +65,7 @@ const SubOverviews = () => {
 
 const Card = ({ title, icon: Icon, categories }: SubOverview) => {
 	return (
-		<div className="rounded-xl border border-gray-200 overflow-hidden">
+		<div className="rounded-xl border border-gray-200 overflow-hidden w-full">
 			{/* Header */}
 			<div className="flex items-center justify-between px-4 py-3 bg-[#F9FAFB]">
 				<div className="flex items-center gap-3">
@@ -92,7 +93,7 @@ const Card = ({ title, icon: Icon, categories }: SubOverview) => {
 
 const Images = () => {
 	return (
-		<div className="grid grid-cols-3 gap-[15px]">
+		<div className="grid md:grid-cols-2 xl:grid-cols-3 gap-[15px] mb-6">
 			{cardImages.map((item) => (
 				<ImageCard key={item.id} {...item} />
 			))}
@@ -110,13 +111,13 @@ const ImageCard = ({ heading, text, images }: CardImage) => {
 				backgroundImage: `linear-gradient(to top, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 60%), url(${images[activeIndex]})`,
 			}}
 		>
-			<div className="flex flex-col text-white self-end px-4 py-2 w-full">
+			<div className="flex flex-col text-white self-end px-4 py-4 w-full">
 				<div>
 					<span className="block font-medium text-[14px]">{heading}</span>
-					<span className="block font-semibold text-[18px]">{text}</span>
+					<span className="block font-semibold text-[18px] leading-6">{text}</span>
 				</div>
 
-				<div className="flex justify-center items-center gap-1 mt-2">
+				<div className="flex justify-center items-center gap-2 mt-2">
 					{images.map((_, index) => (
 						<button
 							key={index}
