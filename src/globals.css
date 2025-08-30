@@ -79,16 +79,22 @@
 :root {
 	--font-primary: "Euclid Circular A";
 	--color-primary: hsl(0, 0%, 10%);
+	--color-gray: hsl(0, 0%, 96%);
+	--color-light-gray: hsl(0, 0%, 89%);
+	--color-semi-gray: hsl(0, 0%, 57%);
+	--color-deep-gray: hsl(0, 0%, 24%);
 }
 
 @theme inline {
-	/* Typography */
 	--font-euclid: var(--font-primary);
-
-	/* colors */
 	--color-primary: var(--color-primary);
+	--color-gray: var(--color-gray);
+	--color-light-gray: var(--color-light-gray);
+	--color-semi-gray: var(--color-semi-gray);
+	--color-deep-gray: var(--color-deep-gray);
 }
 
 body {
 	font-family: var(--font-primary);
+	color: var(--color-primary);
 }
