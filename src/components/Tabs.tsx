@@ -7,11 +7,11 @@ import {
 	UserIcon,
 	type Icon,
 } from "@phosphor-icons/react";
-import { useState } from "react";
+import { useActiveIndex } from "../lib/Hooks";
 import { cn } from "../lib/utils";
 
 export default function Tabs() {
-	const [activeIndex, setActiveIndex] = useState(0);
+	const { activeIndex, handleActiveIndex } = useActiveIndex(0);
 	return (
 		<div className="py-[14px]">
 			<div className="max-w-[1280px] mx-auto flex items-center gap-10 w-full px-6 xl:px-0">
@@ -19,7 +19,7 @@ export default function Tabs() {
 					{tabs.map(({ id, text, icon: Icon }, index) => (
 						<div
 							key={id}
-							onClick={() => setActiveIndex(index)}
+							onClick={() => handleActiveIndex(index)}
 							className={cn(
 								"flex items-center justify-center gap-2 w-[170px] h-[36px] rounded-[4px] cursor-pointer",
 								index === activeIndex && "bg-gray font-semibold"
