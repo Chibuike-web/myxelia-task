@@ -7,12 +7,12 @@ export default function BudgetingModal() {
 	return (
 		<div
 			className="fixed inset-0 bg-black/80 flex items-center justify-center"
-			onClick={(e) => {
-				e.stopPropagation();
-				closeBudgeting();
-			}}
+			onClick={() => closeBudgeting()}
 		>
-			<div className="bg-white w-full max-w-[438px] rounded-[10px] overflow-hidden pb-6 ">
+			<div
+				className="bg-white w-full max-w-[438px] rounded-[10px] overflow-hidden pb-6"
+				onClick={(e) => e.stopPropagation()}
+			>
 				<div className="bg-[#0C2841] h-[213px] flex items-start justify-center overflow-hidden">
 					<img src={modalImage} className="mt-[40px]" />
 				</div>

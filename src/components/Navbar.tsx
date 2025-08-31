@@ -1,5 +1,5 @@
 import { ListIcon, XIcon } from "@phosphor-icons/react";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import {
 	BudgetingIcon,
 	CalendarIcon,
@@ -16,8 +16,7 @@ const navItems = [
 ];
 
 export default function Navbar() {
-	const [isOpen, setIsOpen] = useState(false);
-	const { openBudgeting, openCalendar } = useModal();
+	const { isOpen, toggleOpen, openBudgeting, openCalendar } = useModal();
 	return (
 		<header className="bg-primary py-[20px]">
 			<div className="max-w-[1280px] mx-auto flex justify-between w-full text-white px-6 xl:px-0">
@@ -44,7 +43,7 @@ export default function Navbar() {
 					<span className="size-10 bg-white rounded-full flex items-center justify-center text-primary font-medium text-[24px]">
 						D
 					</span>
-					<button className="md:hidden text-white" onClick={() => setIsOpen((prev) => !prev)}>
+					<button className="md:hidden text-white" onClick={() => toggleOpen()}>
 						{isOpen ? <XIcon size={32} /> : <ListIcon size={32} />}
 					</button>
 				</nav>

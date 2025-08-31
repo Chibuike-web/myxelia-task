@@ -1,8 +1,10 @@
 import { create } from "zustand";
 
 type ModalState = {
+	isOpen: boolean;
 	budgetingOpen: boolean;
 	calendarOpen: boolean;
+	toggleOpen: () => void;
 	openBudgeting: () => void;
 	closeBudgeting: () => void;
 	toggleBudgeting: () => void;
@@ -12,8 +14,10 @@ type ModalState = {
 };
 
 const useModalStore = create<ModalState>((set) => ({
+	isOpen: false,
 	budgetingOpen: false,
 	calendarOpen: false,
+	toggleOpen: () => set((state) => ({ isOpen: !state.isOpen })),
 	openBudgeting: () => set({ budgetingOpen: true }),
 	closeBudgeting: () => set({ budgetingOpen: false }),
 	toggleBudgeting: () => set((state) => ({ budgetingOpen: !state.budgetingOpen })),

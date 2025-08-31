@@ -1,4 +1,9 @@
-import { CaretRightIcon } from "@phosphor-icons/react";
+import {
+	ArrowCircleDownIcon,
+	ArrowCircleUpIcon,
+	CaretLeftIcon,
+	CaretRightIcon,
+} from "@phosphor-icons/react";
 import { useState } from "react";
 import { ListingHouseIcon, ProfileIcon } from "../assets/Icons";
 import firstMetricItem from "../assets/first-metric-item.webp";
@@ -26,29 +31,79 @@ const SalesOverview = () => {
 	const { activeIndex, handleActiveIndex } = useActiveIndex(2);
 	return (
 		<div className="flex flex-col border border-light-gray rounded-[16px] w-full xl:max-w-[857px] xl:flex-shrink-0">
-			<div className="flex justify-between items-center w-full">
-				<div>
-					<h1>Sales Overview</h1>
-					<p>Showing overview Jan 2022 - Sep 2022</p>
+			<div className="flex flex-col sm:flex-row items-start gap-y-4 justify-between sm:items-center w-full px-6 py-4">
+				<div className="flex flex-col gap-1">
+					<h1 className="font-semibold text-[20px]">Sales Overview</h1>
+					<p className="text-[12px] text-gray-500">Showing overview Jan 2022 - Sep 2022</p>
 				</div>
-				<button>View Transactions</button>
+				<button className="w-[140px] h-[32px] sm:w-[177px] sm:h-[46px] rounded-full border border-gray-300 text-[12px] font-medium">
+					View Transactions
+				</button>
 			</div>
-			<div>
-				<div>
-					{["1 Week", "1 Month", "1 Year"].map((item, index) => (
-						<button
-							key={index}
-							onClick={() => handleActiveIndex(index)}
-							className={cn(
-								"w-20 h-8 rounded-[8px]",
-								index === activeIndex && "bg-gray font-semibold"
-							)}
-						>
-							{item}
-						</button>
+
+			<div className="flex text-[14px] items-center sm:self-end px-6">
+				{["1 Week", "1 Month", "1 Year"].map((item, index) => (
+					<button
+						key={index}
+						onClick={() => handleActiveIndex(index)}
+						className={cn(
+							"w-20 h-8 rounded-[8px]",
+							index === activeIndex && "bg-gray font-semibold"
+						)}
+					>
+						{item}
+					</button>
+				))}
+			</div>
+			<span className="w-full block h-[1px] bg-light-gray mt-3 mb-4" />
+
+			<div className="px-6 flex flex-col lg:flex-row lg:items-center gap-4 mb-3">
+				<div className="flex items-center gap-4">
+					<span className="bg-light-gray size-[18px] rounded-full flex flex-shrink-0 items-center justify-center">
+						<CaretLeftIcon size={14} weight="fill" />
+					</span>
+
+					<div className="flex gap-2 w-full h-[160px] items-end">
+						{/* y-axis */}
+
+						<div className="flex items-end gap-2 mb-4">
+							<div className="flex flex-col gap-[14px] text-[10px]">
+								{[50, 40, 30, 20, 10, 0].map((n) => (
+									<span className="leading-[1em]">{n}</span>
+								))}
+							</div>
+							<span className="block h-[148px] w-[1px] bg-light-gray" />
+						</div>
+						{/* x-axis */}
+						<div className="flex gap-[10px] justify-between items-end w-full">
+							{yAxis.map((item) => (
+								<YAxis key={item.month} {...item} />
+							))}
+						</div>
+					</div>
+					<span className="bg-light-gray size-[18px] rounded-full flex flex-shrink-0 items-center justify-center">
+						<CaretRightIcon size={14} weight="fill" />
+					</span>
+				</div>
+				<div className="grid grid-cols-1 sm:grid-cols-2 gap-3 lg:min-w-[400px]">
+					{cashFlow.map((item, index) => (
+						<CashFlowCard key={item.id} {...item} index={index} />
 					))}
 				</div>
 			</div>
+		</div>
+	);
+};
+
+const YAxis = ({ month, barHeight }: YAxisType) => {
+	return (
+		<div className="flex flex-col">
+			<div className="flex items-end gap-1">
+				{barHeight.map((h, index) => (
+					<span className="w-1 block bg-red-500" style={{ height: `${h}px` }} />
+				))}
+			</div>
+			<span className="text-[10px] font-medium">{month}</span>
 		</div>
 	);
 };
@@ -81,9 +136,9 @@ const Card = ({ title, icon: Icon, categories }: SubOverview) => {
 			{/* Categories */}
 			<div className="grid grid-cols-3">
 				{categories.map((cat) => (
-					<div key={cat.tag} className="p-4 flex flex-col gap-2">
-						<div className="text-sm text-gray-600">{cat.tag}</div>
-						<div className="text-2xl text-gray-900 font-semibold">{cat.number}</div>
+					<div key={cat.tag} className="p-4 flex flex-col gap-2 ">
+						<div className="text-sm text-gray-600 leading-4">{cat.tag}</div>
+						<div className="text-2xl text-gray-900 font-semibold leading-10">{cat.number}</div>
 					</div>
 				))}
 			</div>
@@ -131,6 +186,40 @@ const ImageCard = ({ heading, text, images }: CardImage) => {
 				</div>
 			</div>
 		</article>
+	);
+};
+
+type CashFlowCardProps = CashFlow & {
+	index: number;
+};
+
+const CashFlowCard = ({ type, increase, decrease, amount, index }: CashFlowCardProps) => {
+	const isIncrease = increase !== undefined;
+	const styles = ["text-blue-600", "text-green-600", "text-yellow-600", "text-red-600"];
+
+	const typeStyle = styles[index] ?? "";
+
+	return (
+		<div className="w-full flex flex-col h-fit border border-light-gray rounded-[12px] px-4 py-2">
+			<div className={`font-semibold text-[20px] ${typeStyle}`}>
+				N{amount.toLocaleString("en-NG", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+			</div>
+			<div className="flex items-center gap-2">
+				<span className="text-[10px] font-medium text-deep-gray">{type}</span>
+				<div
+					className={cn("flex items-center gap-1", isIncrease ? "text-green-500" : "text-red-500")}
+				>
+					<span>
+						{isIncrease ? (
+							<ArrowCircleUpIcon size={14} weight="fill" />
+						) : (
+							<ArrowCircleDownIcon size={14} weight="fill" />
+						)}
+					</span>
+					<span className="text-[10px]">{isIncrease ? increase : decrease}%</span>
+				</div>
+			</div>
+		</div>
 	);
 };
 
@@ -194,5 +283,89 @@ const cardImages: CardImage[] = [
 		heading: "MOST CLICKED",
 		text: "Urban Prime Plaze Premiere",
 		images: [thirdMetricItem, firstMetricItem, secondMetricItem, thirdMetricItem, firstMetricItem],
+	},
+];
+
+type CashFlow = {
+	id: string;
+	type: string;
+	amount: number;
+	increase?: number;
+	decrease?: number;
+};
+
+const cashFlow: CashFlow[] = [
+	{
+		id: crypto.randomUUID(),
+		type: "Total Inflow",
+		increase: 2.5,
+		amount: 120000000,
+	},
+	{
+		id: crypto.randomUUID(),
+		type: "MRR",
+		increase: 2.5,
+		amount: 50000000,
+	},
+	{
+		id: crypto.randomUUID(),
+		type: "Commission Revenue",
+		decrease: 0.5,
+		amount: 200000000,
+	},
+	{
+		id: crypto.randomUUID(),
+		type: "GMV",
+		decrease: 2.5,
+		amount: 100000000,
+	},
+];
+
+type YAxisType = {
+	month: string;
+	barHeight: number[];
+};
+
+const yAxis = [
+	{
+		month: "Jan",
+		barHeight: [99, 78, 30],
+	},
+	{
+		month: "Feb",
+		barHeight: [99, 78, 30],
+	},
+	{
+		month: "Mar",
+		barHeight: [99, 78, 30],
+	},
+	{
+		month: "Apr",
+		barHeight: [99, 78, 30],
+	},
+	{
+		month: "Jan",
+		barHeight: [99, 78, 30],
+	},
+	{
+		month: "May",
+		barHeight: [99, 78, 30],
+	},
+	{
+		month: "Jun",
+		barHeight: [99, 78, 30],
+	},
+
+	{
+		month: "Ju",
+		barHeight: [99, 78, 30],
+	},
+	{
+		month: "Aug",
+		barHeight: [99, 78, 30],
+	},
+	{
+		month: "Sep",
+		barHeight: [99, 78, 30],
 	},
 ];
