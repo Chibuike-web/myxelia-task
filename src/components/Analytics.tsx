@@ -58,7 +58,7 @@ const SalesOverview = () => {
 			<span className="w-full block h-[1px] bg-light-gray mt-3 mb-4" />
 
 			<div className="px-6 flex flex-col lg:flex-row lg:items-center gap-4 mb-3">
-				<div className="flex items-center gap-4">
+				<div className="flex items-center gap-4 w-full">
 					<span className="bg-light-gray size-[18px] rounded-full flex flex-shrink-0 items-center justify-center">
 						<CaretLeftIcon size={14} weight="fill" />
 					</span>
@@ -99,11 +99,14 @@ const YAxis = ({ month, barHeight }: YAxisType) => {
 	return (
 		<div className="flex flex-col">
 			<div className="flex items-end gap-1">
-				{barHeight.map((h, index) => (
-					<span className="w-1 block bg-red-500" style={{ height: `${h}px` }} />
-				))}
+				{barHeight.map((h, index) => {
+					const barBg = ["bg-blue-600", "bg-green-600", "bg-red-600"];
+
+					const barBgStyle = barBg[index] ?? "";
+					return <span className={`w-1 block ${barBgStyle}`} style={{ height: `${h}px` }} />;
+				})}
 			</div>
-			<span className="text-[10px] font-medium">{month}</span>
+			<span className="text-[10px] font-medium text-gray-600">{month}</span>
 		</div>
 	);
 };
@@ -343,10 +346,7 @@ const yAxis = [
 		month: "Apr",
 		barHeight: [99, 78, 30],
 	},
-	{
-		month: "Jan",
-		barHeight: [99, 78, 30],
-	},
+
 	{
 		month: "May",
 		barHeight: [99, 78, 30],

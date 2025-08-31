@@ -23,10 +23,16 @@ export default function Navbar() {
 				<img src="/myxelia-logo.svg" />
 				<nav className="flex items-center gap-4">
 					<ul className="hidden md:flex items-center gap-4">
-						{navItems.map(({ icon, label }, i) => (
-							<Tooltip key={i} label={label}>
+						{navItems.map(({ icon, label }, i) => {
+							const shouldHaveTooltip = ["Budgeting", "Calendar"].includes(label);
+
+							const button = (
 								<button
+									key={i}
 									className="relative"
+									disabled={
+										label.toLowerCase() !== "budgeting" && label.toLowerCase() === "calendar"
+									}
 									onClick={() => {
 										label.toLowerCase() === "budgeting"
 											? openBudgeting()
@@ -37,9 +43,18 @@ export default function Navbar() {
 								>
 									{icon}
 								</button>
-							</Tooltip>
-						))}
+							);
+
+							return shouldHaveTooltip ? (
+								<Tooltip key={i} label={label}>
+									{button}
+								</Tooltip>
+							) : (
+								<li key={i}>{button}</li>
+							);
+						})}
 					</ul>
+
 					<span className="size-10 bg-white rounded-full flex items-center justify-center text-primary font-medium text-[24px]">
 						D
 					</span>
