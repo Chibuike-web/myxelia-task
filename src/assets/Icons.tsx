@@ -117,18 +117,18 @@ export function SettingIcon({ className = "" }: { className: string }) {
 			<path
 				d="M22 6.5H16"
 				stroke="#52525B"
-				stroke-width="1.5"
-				stroke-miterlimit="10"
-				stroke-linecap="round"
-				stroke-linejoin="round"
+				strokeWidth="1.5"
+				strokeMiterlimit="10"
+				strokeLinecap="round"
+				strokeLinejoin="round"
 			/>
 			<path
 				d="M6 6.5H2"
 				stroke="#52525B"
-				stroke-width="1.5"
-				stroke-miterlimit="10"
-				stroke-linecap="round"
-				stroke-linejoin="round"
+				strokeWidth="1.5"
+				strokeMiterlimit="10"
+				strokeLinecap="round"
+				strokeLinejoin="round"
 			/>
 			<path
 				d="M10 10C11.933 10 13.5 8.433 13.5 6.5C13.5 4.567 11.933 3 10 3C8.067 3 6.5 4.567 6.5 6.5C6.5 8.433 8.067 10 10 10Z"

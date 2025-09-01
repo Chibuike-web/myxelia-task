@@ -68,8 +68,10 @@ const SalesOverview = () => {
 
 						<div className="flex items-end gap-2 mb-4">
 							<div className="flex flex-col gap-[14px] text-[10px]">
-								{[50, 40, 30, 20, 10, 0].map((n) => (
-									<span className="leading-[1em]">{n}</span>
+								{[50, 40, 30, 20, 10, 0].map((n, index) => (
+									<span key={index} className="leading-[1em]">
+										{n}
+									</span>
 								))}
 							</div>
 							<span className="block h-[148px] w-[1px] bg-light-gray" />
@@ -103,7 +105,9 @@ const YAxis = ({ month, barHeight }: YAxisType) => {
 					const barBg = ["bg-blue-600", "bg-green-600", "bg-red-600"];
 
 					const barBgStyle = barBg[index] ?? "";
-					return <span className={`w-1 block ${barBgStyle}`} style={{ height: `${h}px` }} />;
+					return (
+						<span key={index} className={`w-1 block ${barBgStyle}`} style={{ height: `${h}px` }} />
+					);
 				})}
 			</div>
 			<span className="text-[10px] font-medium text-gray-600">{month}</span>

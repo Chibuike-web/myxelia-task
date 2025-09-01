@@ -31,7 +31,7 @@ export default function Navbar() {
 									key={i}
 									className="relative"
 									disabled={
-										label.toLowerCase() !== "budgeting" && label.toLowerCase() === "calendar"
+										label.toLowerCase() !== "budgeting" && label.toLowerCase() !== "calendar"
 									}
 									onClick={() => {
 										label.toLowerCase() === "budgeting"
